@@ -1,5 +1,3 @@
-h1 {
-    font-family: "Comic Sans MS", cursive, sans-serif;
-    background-color: steelblue;
-    color: maroon;
+#time-up {
+    display: none;
 }
