@@ -1,3 +1,15 @@
 #time-up, #timer {
     display: none;
 }
+
+
+.question {
+    display: none;
+}
+
+.answer {
+    display: block;
+    margin: 1% 0;
+    width: 35%;
+    font-size: 25px;
+}

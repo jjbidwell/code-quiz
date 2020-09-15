@@ -4,11 +4,14 @@ var secondsEl = document.querySelector("#seconds");
 var timeUpMessage = document.querySelector("#time-up");
 var startButton = document.querySelector("#start-button");
 var secondsLeft = 0;
-var minutesLeft = 5;
+var minutesLeft = 1;
+
+var question1 = document.querySelector('#question-1');
 
 
 
 startButton.addEventListener('click', function(){
+    question1.style.display = "inherit";
     startButton.style.display = "none";
     timer.style.display = "initial";
     var quizTimer = setInterval(function(){
@@ -16,7 +19,7 @@ startButton.addEventListener('click', function(){
             secondsLeft = 59;
             minutesLeft--
             minutesEl.textContent = minutesLeft;
-        } else if(secondsLeft === 0 && minutesLeft === 0){
+        } else if(secondsLeft === 1 && minutesLeft === 0){
             stopTimer();
             timeUpMessage.style.display = "initial";
             timer.style.display = "none";
