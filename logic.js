@@ -8,25 +8,39 @@ var correctAnswer = document.querySelectorAll('.correct');
 var incorrectAnswer = document.querySelectorAll('.incorrect');
 
 var question1 = document.querySelector('#question-1');
-var secondsLeft = 0;
-var minutesLeft = 1;
+var secondsLeft = 30;
+var minutesLeft = 2;
 var currentQuestion = 1;
+var score = 0;
 
 answerButton.forEach(function(item, index){
     item.addEventListener('click', function(){
-        if (this.getAttribute('class') === "btn btn-success answer correct"){
-            console.log('correct!');
+        if (this.getAttribute('class').includes( " correct")){
+            nextQuestion(true);
         } else {
-            console.log('Wrong!')
+            nextQuestion(false);
         }
 
     })
 });
-// incorrectAnswer.forEach(function(item, index){
-//     item.addEventListener('click', function(){
-//         console.log('Wrong answer');
-//     })
-// });
+
+function nextQuestion(rightOrWrong){
+    var showingPage = document.querySelector('#question-' + currentQuestion);
+    var nextPage = document.querySelector('#question-' + (currentQuestion + 1));
+    showingPage.style.display = "none";
+    nextPage.style.display = "inherit";
+    if (rightOrWrong === true){
+        score++
+        console.log(score);
+    } else if(rightOrWrong === false){
+        console.log('Incorrect');
+        secondsLeft -= 5;
+        secondsEl.textContent = secondsLeft;
+    }
+    currentQuestion++
+}
+
+
 
 
 startButton.addEventListener('click', function(){
