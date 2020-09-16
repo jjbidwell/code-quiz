@@ -31,11 +31,16 @@ function nextQuestion(rightOrWrong){
     nextPage.style.display = "inherit";
     if (rightOrWrong === true){
         score++
-        console.log(score);
     } else if(rightOrWrong === false){
-        console.log('Incorrect');
         secondsLeft -= 5;
+        if(secondsLeft < 0){
+            minutesLeft--
+            secondsLeft = secondsLeft + 60; 
+            console.log(secondsLeft);
+            
+        }
         secondsEl.textContent = secondsLeft;
+        minutesEl.textContent = minutesLeft;
     }
     currentQuestion++
 }
