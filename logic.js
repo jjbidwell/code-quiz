@@ -9,9 +9,12 @@ var incorrectAnswer = document.querySelectorAll('.incorrect');
 
 var question1 = document.querySelector('#question-1');
 var secondsLeft = 30;
-var minutesLeft = 2;
+var minutesLeft = 0;
 var currentQuestion = 1;
 var score = 0;
+
+minutesEl.textContent = minutesLeft;
+secondsEl.textContent = secondsLeft;
 
 answerButton.forEach(function(item, index){
     item.addEventListener('click', function(){
@@ -33,17 +36,22 @@ function nextQuestion(rightOrWrong){
         score++
     } else if(rightOrWrong === false){
         secondsLeft -= 5;
-        if(secondsLeft < 0){
+        if(secondsLeft < 0 && minutesLeft > 0){
             minutesLeft--
             secondsLeft = secondsLeft + 60; 
-            console.log(secondsLeft);
+            secondsEl.textContent = secondsLeft;
+            minutesEl.textContent = minutesLeft;
+            currentQuestion++
+        }else if(minutesLeft < 0){
+            stopTimer()
+            secondsEl.textContent = "00";
+            minutesEl.textContent = "0";
+            } 
             
         }
-        secondsEl.textContent = secondsLeft;
-        minutesEl.textContent = minutesLeft;
+
     }
-    currentQuestion++
-}
+
 
 
 
@@ -53,12 +61,12 @@ startButton.addEventListener('click', function(){
     startButton.style.display = "none";
     timer.style.display = "initial";
     var quizTimer = setInterval(function(){
-        if(secondsLeft === 0 && minutesLeft !== 0){
+        if(secondsLeft >= 0 && minutesLeft > 0){
             secondsLeft = 59;
             minutesLeft--
 
             minutesEl.textContent = minutesLeft;
-        } else if(secondsLeft === 1 && minutesLeft === 0){
+        } else if(secondsLeft < 1 && minutesLeft <= 0){
             stopTimer();
             timeUpMessage.style.display = "initial";
             timer.style.display = "none";
