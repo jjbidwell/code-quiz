@@ -1,6 +1,7 @@
 var timer = document.querySelector('#timer');
 var minutesEl = document.querySelector("#minutes");
 var secondsEl = document.querySelector("#seconds");
+var introText = document.querySelector('#intro-text');
 var timeUpMessage = document.querySelector("#time-up");
 var startButton = document.querySelector("#start-button");
 var answerButton = document.querySelectorAll(".answer");
@@ -8,6 +9,7 @@ var correctAnswer = document.querySelectorAll('.correct');
 var incorrectAnswer = document.querySelectorAll('.incorrect');
 var finalContainer = document.querySelector('#final-container');
 var saveButton = document.querySelector('#save-button');
+var correctIncorrectText = document.querySelector('#correct-or-incorrect');
 var showingPage;
 var nextPage;
 var question1 = document.querySelector('#question-1');
@@ -23,8 +25,9 @@ secondsEl.textContent = secondsLeft;
 
 
 startButton.addEventListener('click', function(){
-    question1.style.display = "inherit";
+    introText.style.display = "none";
     startButton.style.display = "none";
+    question1.style.display = "inherit";
     timer.style.display = "initial";
     var quizTimer = setInterval(function(){
         if(secondsLeft <= 0 && minutesLeft > 0){
@@ -34,6 +37,7 @@ startButton.addEventListener('click', function(){
             minutesEl.textContent = minutesLeft;
         } else if(secondsLeft < 1 && minutesLeft <= 0){
             stopTimer();
+
         } else {
             secondsLeft--
         }
@@ -53,7 +57,7 @@ startButton.addEventListener('click', function(){
     function stopTimer(){
         showingPage = document.querySelector('#question-' + currentQuestion);
         showingPage.style.display = "none";
-        score = score + secondsLeft + (minutesLeft * 60);
+        score = score + .5 * (secondsLeft + (minutesLeft * 60));
         finalContainer.style.display = "block";
         timeUpMessage.textContent = "Your Score: " + score;
         timer.style.display = "none";
@@ -66,7 +70,16 @@ startButton.addEventListener('click', function(){
         if(currentQuestion === 15 && rightOrWrong === true){
             score += 10;
             stopTimer();
+            correctIncorrectText.textContent = "Correct!";
+            setTimeout(function(){
+                correctIncorrectText.textContent = "";
+            }, 1200);
         } else if(currentQuestion === 15 && rightOrWrong === false){
+            setTimeout(function(){
+            correctIncorrectText.textContent = "Inorrect!";
+            correctIncorrectText.textContent = "";
+            }, 1200);
+
             stopTimer();
         } else {
     
@@ -77,22 +90,36 @@ startButton.addEventListener('click', function(){
             
             if(rightOrWrong === true){
                 score += 10;
+                console.log(score);
                 currentQuestion++
+                correctIncorrectText.textContent = "Correct!";
+                setTimeout(function(){
+                    correctIncorrectText.textContent = "";
+                }, 1200);
             } else if(rightOrWrong === false){
                 secondsLeft -= 15;
-                currentQuestion++
                 if(secondsLeft < 0 && minutesLeft > 0){
-                    minutesLeft--
                     secondsLeft = secondsLeft + 60; 
+                    minutesLeft--;
                     secondsEl.textContent = secondsLeft;
                     minutesEl.textContent = minutesLeft;
+                    console.log(score);
                 } else if(secondsLeft <= 0 && minutesLeft <= 0){
+                    secondsLeft = 0;
+                    minutesLeft = 0;
                     secondsEl.textContent = "00";
                     minutesEl.textContent = "0";
+                    nextPage.style.display = "none";
+                    console.log(score);
                     stopTimer()
                     } 
+                currentQuestion++
+                correctIncorrectText.textContent = "Incorrect";
+                setTimeout(function(){
+                    correctIncorrectText.textContent = "";
+                }, 1200);    
                     
-                }
+            }
         }
     }
 

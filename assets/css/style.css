@@ -2,14 +2,40 @@
     display: none;
 }
 
+#intro-text {
+    text-align: center;
+    font-size: 18px;
+}
 
 .question {
     display: none;
+    margin: 0 auto;
+    text-align: center;
 }
 
-.answer {
+.answer, #start-button {
     display: block;
-    margin: 1% 0;
-    width: 35%;
+    margin: 2% auto;
+    width: 45%;
     font-size: 25px;
+}
+
+#timer {
+    text-align: center;
+    margin: auto;
+    font-size: 35px;
+}
+
+h3 {
+    margin: 5%;
+}
+
+#correct-or-incorrect {
+    text-align: center;
+    color: crimson;
+    font-size: 25px;
+}
+
+#time-up {
+    margin: auto;
 }

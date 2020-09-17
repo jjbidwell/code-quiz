@@ -11,26 +11,32 @@
     <main class="container">
 
         <section id="starter">
-            <h1>Code Quiz</h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia temporibus id facere! 
-            Error obcaecati optio veniam nihil modi non. Provident, fugit eaque atque corporis 
-            incidunt aliquam vitae necessitatibus sapiente itaque.</p>
+            <h1 class = "mb-5 mt-5">Code Quiz</h1>
+            <p id="intro-text">Welcome to my code quiz! This quiz will test your knowledge of basic JavaScript by asking 
+                fifteen questions and assigning you a score. You get ten points for every question you
+                 get right, plus half a point for every second left when you finish. Be careful, though,
+                 every wrong answer takes 15 seconds from your remaining time. So test your knowledge and save
+                 your high score!
+            </p>
         </section>
 
         <section id="hidables">
-            <p id="timer">
-                Time Remaining - 
-                <span id="minutes">
-                    
-                </span>
-                :
-                <span id="seconds">
-                    
-                </span>        
-            </p>
+            <div id="timer">
+                <p>
+                    Time Remaining - 
+                    <span id="minutes">
+                        
+                    </span>
+                    :
+                    <span id="seconds">
+                        
+                    </span>        
+                </p>
+            </div>
 
             <span id="final-container">
                 <span id="time-up"></span>
+                <input type="text" placeholder="Initials">
                 <button class="btn btn-danger" id="save-button">Save my score!</button>
             </span>
 
@@ -156,6 +162,10 @@
             <button class="btn btn-success answer incorrect">prepend()</button>
             <button class="btn btn-success answer incorrect">push()</button>
         </section>
+
+        <div>
+            <p id="correct-or-incorrect"></p>
+        </div>
     </main>
 
     <script src="logic.js"></script>
