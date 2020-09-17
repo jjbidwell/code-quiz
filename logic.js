@@ -24,6 +24,7 @@ var savedScoreArray = [];
 minutesEl.textContent = minutesLeft;
 secondsEl.textContent = secondsLeft;
 
+//Start timer
 startButton.addEventListener('click', function(){
     introText.style.display = "none";
     startButton.style.display = "none";
@@ -50,6 +51,8 @@ startButton.addEventListener('click', function(){
 
     }, 1000);
 
+
+    //Saves scores
     saveButton.addEventListener('click', function(){
         var savedName = document.querySelector('#initials').value.trim();
         var savedScore = score;
@@ -63,6 +66,7 @@ startButton.addEventListener('click', function(){
         }
     });
 
+    //Renders scores
     function renderScores(){
         if(localStorage.getItem('Person') === null){
         } else {
@@ -80,6 +84,7 @@ startButton.addEventListener('click', function(){
 
     }
 
+    //Stops timer
     function stopTimer(){
         showingPage = document.querySelector('#question-' + currentQuestion);
         showingPage.style.display = "none";
@@ -93,6 +98,7 @@ startButton.addEventListener('click', function(){
         
     }
 
+    //Moves to the next question
     function nextQuestion(rightOrWrong){
 
         if(currentQuestion === 15 && rightOrWrong === true){
@@ -151,7 +157,7 @@ startButton.addEventListener('click', function(){
             }
         }
     }
-
+        //Adds event listeners to all answer buttons
         answerButton.forEach(function(item, index){
             item.addEventListener('click', function(){
                 if (this.getAttribute('class').includes( " correct")){
