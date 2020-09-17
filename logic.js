@@ -47,7 +47,7 @@ startButton.addEventListener('click', function(){
     }, 1000);
 
     saveButton.addEventListener('click', function(){
-        console.log('Save button clicked!');
+
     })
 
     function stopTimer(){
@@ -64,11 +64,9 @@ startButton.addEventListener('click', function(){
     function nextQuestion(rightOrWrong){
 
         if(currentQuestion === 15 && rightOrWrong === true){
-            console.log('last question answered!');
             score += 10;
             stopTimer();
         } else if(currentQuestion === 15 && rightOrWrong === false){
-            console.log('last question answered!');
             stopTimer();
         } else {
     
@@ -82,12 +80,12 @@ startButton.addEventListener('click', function(){
                 currentQuestion++
             } else if(rightOrWrong === false){
                 secondsLeft -= 5;
+                currentQuestion++
                 if(secondsLeft < 0 && minutesLeft > 0){
                     minutesLeft--
                     secondsLeft = secondsLeft + 60; 
                     secondsEl.textContent = secondsLeft;
                     minutesEl.textContent = minutesLeft;
-                    currentQuestion++
                 } else if(secondsLeft <= 0 && minutesLeft <= 0){
                     secondsEl.textContent = "00";
                     minutesEl.textContent = "0";
@@ -102,7 +100,7 @@ startButton.addEventListener('click', function(){
             item.addEventListener('click', function(){
                 if (this.getAttribute('class').includes( " correct")){
                     nextQuestion(true);
-                } else {
+                } else if(this.getAttribute('class').includes( " incorrect")){
                     nextQuestion(false);
                 }
         
