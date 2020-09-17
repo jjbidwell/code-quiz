@@ -79,7 +79,7 @@ startButton.addEventListener('click', function(){
                 score += 10;
                 currentQuestion++
             } else if(rightOrWrong === false){
-                secondsLeft -= 5;
+                secondsLeft -= 15;
                 currentQuestion++
                 if(secondsLeft < 0 && minutesLeft > 0){
                     minutesLeft--
