@@ -8,6 +8,7 @@ var answerButton = document.querySelectorAll(".answer");
 var correctAnswer = document.querySelectorAll('.correct');
 var incorrectAnswer = document.querySelectorAll('.incorrect');
 var finalContainer = document.querySelector('#final-container');
+var scoreList = document.querySelector('#score-list');
 var saveButton = document.querySelector('#save-button');
 var correctIncorrectText = document.querySelector('#correct-or-incorrect');
 var showingPage;
@@ -17,12 +18,11 @@ var secondsLeft = 30;
 var minutesLeft = 2;
 var currentQuestion = 1;
 var score = 0;
+var savedScoreArray;
+
 
 minutesEl.textContent = minutesLeft;
 secondsEl.textContent = secondsLeft;
-
-
-
 
 startButton.addEventListener('click', function(){
     introText.style.display = "none";
@@ -51,8 +51,32 @@ startButton.addEventListener('click', function(){
     }, 1000);
 
     saveButton.addEventListener('click', function(){
+        var savedName = document.querySelector('#initials').value;
+        var savedScore = score;
+        savedScoreArray.push([savedName, savedScore]);
+        localStorage.setItem("Person", savedScoreArray);
+        timeUpMessage.style.display = "none";
+        finalContainer.style.display = "none";
+        renderScores();
+    });
 
-    })
+    function renderScores(){
+        if(localStorage.getItem('Person') === null){
+        } else {
+            savedScoreArray = localStorage.getItem('Person');
+            savedScoreArray = savedScoreArray.split(',');
+            console.log(savedScoreArray);
+            scoreList.innerHTML = "";
+            for (var i = 0; i < savedScoreArray.length; i = i + 2){
+                var name = savedScoreArray[i];
+                var score = savedScoreArray[i + 1];
+                var li = document.createElement('li');
+                li.textContent = name + " : " + score;
+                scoreList.append(li);
+            }
+        }
+
+    }
 
     function stopTimer(){
         showingPage = document.querySelector('#question-' + currentQuestion);
@@ -62,6 +86,8 @@ startButton.addEventListener('click', function(){
         timeUpMessage.textContent = "Your Score: " + score;
         timer.style.display = "none";
         clearInterval(quizTimer);
+        renderScores();
+
         
     }
 
@@ -73,12 +99,12 @@ startButton.addEventListener('click', function(){
             correctIncorrectText.textContent = "Correct!";
             setTimeout(function(){
                 correctIncorrectText.textContent = "";
-            }, 1200);
+            }, 1000);
         } else if(currentQuestion === 15 && rightOrWrong === false){
             setTimeout(function(){
             correctIncorrectText.textContent = "Inorrect!";
             correctIncorrectText.textContent = "";
-            }, 1200);
+            }, 1000);
 
             stopTimer();
         } else {
@@ -90,12 +116,11 @@ startButton.addEventListener('click', function(){
             
             if(rightOrWrong === true){
                 score += 10;
-                console.log(score);
                 currentQuestion++
                 correctIncorrectText.textContent = "Correct!";
                 setTimeout(function(){
                     correctIncorrectText.textContent = "";
-                }, 1200);
+                }, 1000);
             } else if(rightOrWrong === false){
                 secondsLeft -= 15;
                 if(secondsLeft < 0 && minutesLeft > 0){
@@ -103,21 +128,19 @@ startButton.addEventListener('click', function(){
                     minutesLeft--;
                     secondsEl.textContent = secondsLeft;
                     minutesEl.textContent = minutesLeft;
-                    console.log(score);
                 } else if(secondsLeft <= 0 && minutesLeft <= 0){
                     secondsLeft = 0;
                     minutesLeft = 0;
                     secondsEl.textContent = "00";
                     minutesEl.textContent = "0";
                     nextPage.style.display = "none";
-                    console.log(score);
                     stopTimer()
                     } 
                 currentQuestion++
                 correctIncorrectText.textContent = "Incorrect";
                 setTimeout(function(){
                     correctIncorrectText.textContent = "";
-                }, 1200);    
+                }, 1000);    
                     
             }
         }
