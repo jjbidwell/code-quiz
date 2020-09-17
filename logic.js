@@ -6,6 +6,8 @@ var startButton = document.querySelector("#start-button");
 var answerButton = document.querySelectorAll(".answer");
 var correctAnswer = document.querySelectorAll('.correct');
 var incorrectAnswer = document.querySelectorAll('.incorrect');
+var finalContainer = document.querySelector('#final-container');
+var saveButton = document.querySelector('#save-button');
 var showingPage;
 var nextPage;
 var question1 = document.querySelector('#question-1');
@@ -44,13 +46,15 @@ startButton.addEventListener('click', function(){
 
     }, 1000);
 
-
+    saveButton.addEventListener('click', function(){
+        console.log('Save button clicked!');
+    })
 
     function stopTimer(){
         showingPage = document.querySelector('#question-' + currentQuestion);
         showingPage.style.display = "none";
         score = score + secondsLeft + (minutesLeft * 60);
-        timeUpMessage.style.display = "block";
+        finalContainer.style.display = "block";
         timeUpMessage.textContent = "Your Score: " + score;
         timer.style.display = "none";
         clearInterval(quizTimer);
@@ -58,42 +62,41 @@ startButton.addEventListener('click', function(){
     }
 
     function nextQuestion(rightOrWrong){
+
         if(currentQuestion === 2 && rightOrWrong === true){
             console.log('last question answered!');
             score += 10;
             stopTimer();
-            return;
         } else if(currentQuestion === 2 && rightOrWrong === false){
             console.log('last question answered!');
             stopTimer();
-            return;
-        }
+        } else {
     
-        showingPage = document.querySelector('#question-' + currentQuestion);
-        nextPage = document.querySelector('#question-' + (currentQuestion + 1));
-        console.log(nextPage);
-        showingPage.style.display = "none";
-        nextPage.style.display = "inherit";
-        
-        if(rightOrWrong === true){
-            score += 10;
-            currentQuestion++
-        } else if(rightOrWrong === false){
-            secondsLeft -= 5;
-            if(secondsLeft < 0 && minutesLeft > 0){
-                minutesLeft--
-                secondsLeft = secondsLeft + 60; 
-                secondsEl.textContent = secondsLeft;
-                minutesEl.textContent = minutesLeft;
+            showingPage = document.querySelector('#question-' + currentQuestion);
+            nextPage = document.querySelector('#question-' + (currentQuestion + 1));
+            showingPage.style.display = "none";
+            nextPage.style.display = "inherit";
+            
+            if(rightOrWrong === true){
+                score += 10;
                 currentQuestion++
-            }else if(secondsLeft <= 0 && minutesLeft <= 0){
-                secondsEl.textContent = "00";
-                minutesEl.textContent = "0";
-                stopTimer()
-                } 
-                
-            }
+            } else if(rightOrWrong === false){
+                secondsLeft -= 5;
+                if(secondsLeft < 0 && minutesLeft > 0){
+                    minutesLeft--
+                    secondsLeft = secondsLeft + 60; 
+                    secondsEl.textContent = secondsLeft;
+                    minutesEl.textContent = minutesLeft;
+                    currentQuestion++
+                } else if(secondsLeft <= 0 && minutesLeft <= 0){
+                    secondsEl.textContent = "00";
+                    minutesEl.textContent = "0";
+                    stopTimer()
+                    } 
+                    
+                }
         }
+    }
 
         answerButton.forEach(function(item, index){
             item.addEventListener('click', function(){
