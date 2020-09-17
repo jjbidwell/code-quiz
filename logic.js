@@ -18,7 +18,7 @@ var secondsLeft = 30;
 var minutesLeft = 2;
 var currentQuestion = 1;
 var score = 0;
-var savedScoreArray;
+var savedScoreArray = [];
 
 
 minutesEl.textContent = minutesLeft;
@@ -51,13 +51,16 @@ startButton.addEventListener('click', function(){
     }, 1000);
 
     saveButton.addEventListener('click', function(){
-        var savedName = document.querySelector('#initials').value;
+        var savedName = document.querySelector('#initials').value.trim();
         var savedScore = score;
-        savedScoreArray.push([savedName, savedScore]);
-        localStorage.setItem("Person", savedScoreArray);
-        timeUpMessage.style.display = "none";
-        finalContainer.style.display = "none";
-        renderScores();
+        if(savedName !== ''){
+            savedScoreArray.push(savedName);
+            savedScoreArray.push(savedScore);
+            localStorage.setItem("Person", savedScoreArray);
+            timeUpMessage.style.display = "none";
+            finalContainer.innerHTML = "<u id='score-banner'>Scores</u>";
+            renderScores();
+        }
     });
 
     function renderScores(){
@@ -65,7 +68,6 @@ startButton.addEventListener('click', function(){
         } else {
             savedScoreArray = localStorage.getItem('Person');
             savedScoreArray = savedScoreArray.split(',');
-            console.log(savedScoreArray);
             scoreList.innerHTML = "";
             for (var i = 0; i < savedScoreArray.length; i = i + 2){
                 var name = savedScoreArray[i];
@@ -96,15 +98,17 @@ startButton.addEventListener('click', function(){
         if(currentQuestion === 15 && rightOrWrong === true){
             score += 10;
             stopTimer();
+            correctIncorrectText.style.visibility = "visible";
             correctIncorrectText.textContent = "Correct!";
             setTimeout(function(){
-                correctIncorrectText.textContent = "";
-            }, 1000);
+                correctIncorrectText.style.visibility = "hidden";
+            }, 750);
         } else if(currentQuestion === 15 && rightOrWrong === false){
+            correctIncorrectText.style.visibility = "visible";
+            correctIncorrectText.textContent = "Incorrect!";
             setTimeout(function(){
-            correctIncorrectText.textContent = "Inorrect!";
-            correctIncorrectText.textContent = "";
-            }, 1000);
+                correctIncorrectText.style.visibility = "hidden";
+            }, 750);
 
             stopTimer();
         } else {
@@ -117,10 +121,11 @@ startButton.addEventListener('click', function(){
             if(rightOrWrong === true){
                 score += 10;
                 currentQuestion++
+                correctIncorrectText.style.visibility = "visible";
                 correctIncorrectText.textContent = "Correct!";
                 setTimeout(function(){
-                    correctIncorrectText.textContent = "";
-                }, 1000);
+                    correctIncorrectText.style.visibility = "hidden";
+                }, 750);
             } else if(rightOrWrong === false){
                 secondsLeft -= 15;
                 if(secondsLeft < 0 && minutesLeft > 0){
@@ -137,10 +142,11 @@ startButton.addEventListener('click', function(){
                     stopTimer()
                     } 
                 currentQuestion++
+                correctIncorrectText.style.visibility = "visible";
                 correctIncorrectText.textContent = "Incorrect";
                 setTimeout(function(){
-                    correctIncorrectText.textContent = "";
-                }, 1000);    
+                    correctIncorrectText.style.visibility = "hidden";
+                }, 750);    
                     
             }
         }
