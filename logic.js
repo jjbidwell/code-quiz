@@ -63,11 +63,11 @@ startButton.addEventListener('click', function(){
 
     function nextQuestion(rightOrWrong){
 
-        if(currentQuestion === 2 && rightOrWrong === true){
+        if(currentQuestion === 15 && rightOrWrong === true){
             console.log('last question answered!');
             score += 10;
             stopTimer();
-        } else if(currentQuestion === 2 && rightOrWrong === false){
+        } else if(currentQuestion === 15 && rightOrWrong === false){
             console.log('last question answered!');
             stopTimer();
         } else {
